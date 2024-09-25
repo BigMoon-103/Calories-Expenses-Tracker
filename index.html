@@ -1,150 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
-
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie and Expense Tracker</title>
-    
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <h1>Calorie and Expense Tracker</h1>
-
-    <div class="tab">
-        <button onclick="openTab('Calories')">Calories</button>
-        <button onclick="openTab('Expenses')">Expenses</button>
+    <h1>Tracker</h1>
+    <div class="tabs">
+        <button id="caloriesTab" class="tab active" onclick="switchToCalories()">Calories</button>
+        <button id="expensesTab" class="tab" onclick="switchToExpenses()">Expenses</button>
     </div>
 
-    <div id="Calories" class="tab-content">
-        <h2>Calories Intake</h2>
-        <form>
-            <label for="foodItem">Food Item:</label>
-            <input type="text" id="food"><br><br>
-
-            <label for="caloriesPerUnit">Calories ( per unit of kg):</label>
-            <input type="number" id="caloriesPerUnit"><br><br>
-
-            <label for="quantity">Quantity (units or kg):</label>
-            <input type="number" id="quantity"><br><br>
-
-            <button type="button" onclick="calculateCalories()">Calculate Total Calories</button>
-        </form>
-
-        <h3>Items Added:</h3>
-        <ul id="caloriesList"></ul>
-
-        <p id="totalCalories">Total Calories: 0</p>
-
-        <button type="button" onclick="resetCalories()">Reset Calories</button>
-
-        <script>
-            let totalCalories =0;
-
-            function calculateCalories(){
-                var food = document.getElementById("food").value;
-                var caloriesPerUnit = document.getElementById("caloriesPerUnit").value;
-                var quantity = document.getElementById("quantity").value;
-                var itemCalories = caloriesPerUnit * quantity;
-
-                if ( food && caloriesPerUnit && quantity) {
-                    totalCalories += parseFloat (itemCalories);
-                    
-                    var listItem = document.createElement("li");
-                    listItem.innerText = `${food}: ${caloriesPerUnit} cal/unit x ${quantity} = ${itemCalories} cal`;
-                    
-                    document.getElementById("caloriesList").appendChild(listItem);
-
-                    document.getElementById("totalCalories").innerText= "Total Calories: " + totalCalories;
-
-                    document.getElementById("food").value ='';
-                    document.getElementById("caloriesPerUnit").value='';
-                    document.getElementById("quantity").value='';
-                }else {
-                    alert ("please fill in all blanks");
-                }
-            }
-
-            function resetCalories(){
-                    document.getElementById("food").value ='';
-                    document.getElementById("caloriesPerUnit").value='';
-                    document.getElementById("quantity").value='';
-                    totalCalories = 0;
-                    document.getElementById("totalCalories").innerText = "total Calories: 0";
-                    document.getElementById("caloriesList").innerHTML= '';
-            }
-        </script>
+    <!--calorie -->
+    <div id="caloriesTabContent" class="main-container">
+        <h2>Calories Tracker</h2>
+        <label for="foodItem">Food Item:</label>
+        <input type="text" id="foodItem" placeholder="Enter food item">
+        <label for="caloriesPerUnit">Calories per unit:</label>
+        <input type="number" id="caloriesPerUnit" placeholder="Calories per unit">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+        <button id="calculateCalories">Calculate Total</button>
+        <button id="resetCalories">Reset</button>
+        
+        <h3>Total Calories: <span id="totalCalories">0</span></h3>
+        <h4>Items Added:</h4>
+        <ul id="itemslist"></ul>
     </div>
 
-    <div id="Expenses" class="tab-content" style="display: none;">
-        <h2>Money Spent</h2>
-        <form>
-            <label for="item">Item:</label>
-            <input type="text" id="item"><br><br>
-
-            <label for="amountPerUnit">Amount Spent ( per unit):</label>
-            <input type="number" id="amountPerUnit"><br><br>
-
-            <label for="quantityExpenses">Quantity Bought:</label>
-            <input type="number" id="quantityExpenses"><br><br>
-
-            <button type="button" onclick="calculateExpenses()">Calculate Total Expenses</button>
-        </form>
-
-        <h3>Items Added:</h3>
-        <ul  id="expensesList"></ul>
-
-        <p id="totalExpenses">Total Expenses: 0</p>
-
-        <button type="button" onclick="resetExpenses()">Reset Expenses</button>
-
-        <script>
-            let totalExpenses = 0;
-
-            function calculateExpenses() {
-                var item= document.getElementById("item").value;
-                var amountPerUnit = document.getElementById("amountPerUnit").value;
-                var quantityBought = document.getElementById("quantityExpenses").value;
-                var itemTotal = amountPerUnit * quantityBought;
-
-                if(item && amountPerUnit && quantityBought){
-                    totalExpenses += parseFloat(itemTotal);
-                
-                    var listItem = document.createElement("li");
-                    listItem.innerText =`${item}: ${amountPerUnit} per unit x ${quantityBought} = ${itemTotal}`;
-
-                    document.getElementById("expensesList").appendChild(listItem);
-
-                    document.getElementById("totalExpenses").innerText = "Total Expenses: " + totalExpenses; 
-
-                    document.getElementById("item").value='';
-                    document.getElementById("amountPerUnit").value='';
-                    document.getElementById("quantityExpenses").value='';
-                }else{
-                    alert ("Please fill in all the blanks.");
-                }
-            
-            }
-
-            function resetExpenses() {
-                document.getElementById("item").value = ''; 
-                document.getElementById("amountPerUnit").value = ''; 
-                document.getElementById("quantityExpenses").value = '';
-                totalExpenses = 0;
-                document.getElementById("totalExpenses").innerText = "Total Expenses: 0"; 
-                document.getElementById("expensesList").innerHTML = ''; 
-                }
-
-        </script>
+    <!--expenses-->
+    <div id="expensesTabContent" class="main-container" style="display: none;">
+        <h2>Expenses Tracker</h2>
+        <label for="ExpenseItem">Expense Item:</label>
+        <input type="text" id="ExpenseItem" placeholder="Enter expense item">
+        <label for="pricePerUnit">Price per unit:</label>
+        <input type="number" id="pricePerUnit" placeholder="Price per unit">
+        <label for="quantityExpense">Quantity:</label>
+        <input type="number" id="quantityExpense" placeholder="Enter quantity">
+        <button id="calculateExpenses">Calculate Total</button>
+        <button id="resetExpenses">Reset</button>
+        
+        <h3>Total Expenses: <span id="totalExpenses">0</span></h3>
+        <h4>Items Added:</h4>
+        <ul id="expenseslist"></ul>
     </div>
 
-    <script>
-        function openTab(tabName) {
-            document.getElementById("Calories").style.display = "none";
-            document.getElementById("Expenses").style.display = "none";
-            document.getElementById(tabName).style.display = "block";
-        }
-
-        document.getElementById("Calories").style.display = "block";
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
